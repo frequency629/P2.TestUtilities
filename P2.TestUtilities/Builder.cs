@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using CloneExtensions;
 
 namespace P2.TestUtilities
 {
     public class Builder<T> where T : new()
     {
+        private Func<T> baseObjectDelegate;
         private readonly IList<(PropertyInfo, object)> changes;
-        private T defaultModel;
         
-        public Builder(T defaultModel)
+        public Builder(Func<T> baseObjectDelegate)
         {
-            this.defaultModel = defaultModel;
+            this.baseObjectDelegate = baseObjectDelegate;
             changes = new List<(PropertyInfo, object)>();
         }
 
         public T Build()
         {
+            var defaultModel = MakeBaseObject();
+
             foreach (var (property, value) in changes)
             {
                 property.SetValue(defaultModel, value);
@@ -26,9 +27,9 @@ namespace P2.TestUtilities
             return defaultModel;
         }
 
-        public Builder<T> From(T baseModel)
+        public Builder<T> From(Func<T> baseObjectDelegate)
         {
-            defaultModel = baseModel.GetClone();
+            this.baseObjectDelegate = baseObjectDelegate;
 
             return this;
         }
@@ -41,5 +42,8 @@ namespace P2.TestUtilities
             
             return this;
         }
+
+        private T MakeBaseObject() => baseObjectDelegate.Invoke();
+
     }
 }

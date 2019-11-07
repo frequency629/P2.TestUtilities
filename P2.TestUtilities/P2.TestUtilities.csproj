@@ -3,16 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>Tim Wade</Authors>
     <Company>Tim Wade</Company>
     <PackageProjectUrl>https://github.com/frequency629/P2.TestUtilities</PackageProjectUrl>
     <RepositoryUrl></RepositoryUrl>
     <RepositoryType></RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CloneExtensions" Version="1.4.2" />
-  </ItemGroup>
 
 </Project>
